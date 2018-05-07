@@ -114,10 +114,9 @@ scroll-down = bspwm-deskprev
 ;  	    M O D U L E    L A Y O U T S
 ;----------------------------------------------------------
 
-modules-left = bspwm RightArrow3 mail RightArrow1 powermenu music
-# modules-left = bspwm RightArrow3 weather RightArrow2 mail RightArrow1 powermenu music
+modules-left = bspwm i3 RightArrow3 weather RightArrow2 mail RightArrow1 powermenu music
 modules-center = MiddleArrowLeft date MiddleArrowRight
-modules-right = arrow1 LeftStripe arrow1 volume arrow2 network ssh vpn arrow3 cpu arrow2 memory arrow3 filesystem arrow2 temperature arrow3 battery
+modules-right = arrow1 LeftStripe arrow1 volume arrow2 eth network ssh vpn arrow3 cpu arrow2 memory arrow3 filesystem arrow2 temperature arrow3 battery
 
 ; All modules available in this config file:
 ; bspwm text xwindow tray xkeyboard filesystem mpd backlight cpu
@@ -127,6 +126,7 @@ modules-right = arrow1 LeftStripe arrow1 volume arrow2 network ssh vpn arrow3 cp
 [bar/secondary]
 inherit = bar/base
 bottom = true
+
 modules-left = mpd music github
 modules-center =
 modules-right = powermenu arrow1 arrow2 weather arrow3 mail arrow2 network vpn eth
@@ -186,6 +186,57 @@ label-empty-font = 3
 ;ws-icon-4 = web;♞
 ;ws-icon-default = ♟
 
+;----------------------------------------------------------
+;		I 3 W M   M O D U L E
+;----------------------------------------------------------
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+fuzzy-match = false
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index% %{T4}%icon%
+label-focused-background = ${module/bspwm.label-focused-background}
+label-focused-underline = ${module/bspwm.label-focused-underline}
+label-focused-padding = ${module/bspwm.label-focused-padding}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index% %{T4}%icon%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index% %{T4}%icon%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index% %{T4}%icon%
+label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+; ws-icon-[0-9]+ = label;icon
+; ; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = 1:Terminals;
+ws-icon-1 = 2:Steam;
+ws-icon-2 = 3:Internet;;
+ws-icon-3 = 4:Random;
+ws-icon-4 = 5:Random;
+ws-icon-5 = 6:Random;
+ws-icon-6 = 7:Random;
+ws-icon-7 = 8:Random;
+ws-icon-8 = 9:RDP/Spice;
+ws-icon-9 = 10:Music;
+ws-icon-default = 
 
 ;----------------------------------------------------------
 ;	          T E X T    M O D U L E S
@@ -446,7 +497,7 @@ ramp-signal-7 = █
 [module/eth]
 type = internal/network
 ; To test interface: $ ls -1 /sys/class/net/
-interface = ens5f5
+interface = enp3s0
 interval = 0.5
 
 label-connected = "   %local_ip% %downspeed:8%  %upspeed:8%  "
