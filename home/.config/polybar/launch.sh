@@ -8,6 +8,7 @@
 
 # Launch bar1 and bar2
 #polybar base &
+MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 
 if ! pgrep -x polybar; then
 	polybar base &

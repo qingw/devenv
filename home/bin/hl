@@ -1,0 +1,2 @@
+#!/bin/bash
+gpg --decrypt $HOME/org/ledger.gpg 2>/dev/null | ledger -f - "$@"

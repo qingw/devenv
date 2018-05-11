@@ -1,0 +1,31 @@
+directory: ~/Music/Sorted
+# library: ~/Music/Data/musiclibrary.blb
+
+import:
+    move: yes
+    resume: ask
+    incremental: yes
+    log: beetslog.txt
+
+ignore: .DS_Store Thumbs.db
+ignore_hidden: yes
+
+paths:
+    default: %title{$albumartist} - %title{$album} ($year)%aunique{}
+
+plugins: embedart lastgenre scrub chroma
+puginpath: ~/beets/myplugins
+
+ui:
+    color: yes
+    colors:
+        text_success: green
+        text_warning: yellow
+        text_error: red
+        text_highlight: red
+        text_highlight_minor: lightgray
+        action_default: turquoise
+        action: blue
+
+match:
+    strong_rec_thresh: 0.25

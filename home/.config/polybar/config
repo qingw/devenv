@@ -44,7 +44,7 @@ margin-top = 21
 margin-bottom = 21
 
 [bar/base]
-monitor = ${env:MONITOR:HDMI-0}
+monitor = ${env:MONITOR:HDMI-2}
 ;monitor-fallback = ${env:MONITOR:eDP-1}
 ;dpi = ${xrdb:Xft.dpi:136}
 bottom = false
@@ -76,6 +76,7 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
+; override-redirect = true
 
 ;----------------------------------------------------------
 ;			F O N T S
@@ -104,7 +105,7 @@ tray-detached = false
 tray-foreground = ${colors.xcolor7}
 tray-background = ${colors.xcolor1}
 
-wm-restack = bspwm
+wm-restack = i3
 ;override-redirect = true
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
@@ -191,52 +192,128 @@ label-empty-font = 3
 ;----------------------------------------------------------
 [module/i3]
 type = internal/i3
-format = <label-state> <label-mode>
+
 index-sort = true
+; Only show workspaces defined on the same output as the bar
+; pin-workspaces = true
+
+; Create click handler used to focus workspace
+; Default: true
+enable-click = true
+
+; Create scroll handlers used to cycle workspaces
+; Default: true
+enable-scroll = true
+
+; Wrap around when reaching the first/last workspace
+; Default: true
 wrapping-scroll = false
-fuzzy-match = false
 
-; Only show workspaces on the same output as the bar
-;pin-workspaces = true
-label-mode = %mode%
-label-mode-padding = 2
-label-mode-foreground = #000
-label-mode-background = ${colors.primary}
+; Set the scroll cycle direction
+; Default: true
+reverse-scroll = false
 
-; focused = Active workspace on focused monitor
-label-focused = %index% %{T4}%icon%
-label-focused-background = ${module/bspwm.label-focused-background}
-label-focused-underline = ${module/bspwm.label-focused-underline}
-label-focused-padding = ${module/bspwm.label-focused-padding}
-
-; unfocused = Inactive workspace on any monitor
-label-unfocused = %index% %{T4}%icon%
-label-unfocused-padding = ${module/bspwm.label-occupied-padding}
-
-; visible = Active workspace on unfocused monitor
-label-visible = %index% %{T4}%icon%
-label-visible-background = ${self.label-focused-background}
-label-visible-underline = ${self.label-focused-underline}
-label-visible-padding = ${self.label-focused-padding}
-
-; urgent = Workspace with urgency hint set
-label-urgent = %index% %{T4}%icon%
-label-urgent-background = ${module/bspwm.label-urgent-background}
-label-urgent-padding = ${module/bspwm.label-urgent-padding}
+; Use fuzzy (partial) matching on labels when assigning
+; icons to workspaces
+; Example: code;♚ will apply the icon to all workspaces
+; containing 'code' in the label
+; Default: false
+fuzzy-match = true
 
 ; ws-icon-[0-9]+ = label;icon
-; ; NOTE: The label needs to match the name of the i3 workspace
-ws-icon-0 = 1:Terminals;
-ws-icon-1 = 2:Steam;
-ws-icon-2 = 3:Internet;;
-ws-icon-3 = 4:Random;
-ws-icon-4 = 5:Random;
-ws-icon-5 = 6:Random;
-ws-icon-6 = 7:Random;
-ws-icon-7 = 8:Random;
-ws-icon-8 = 9:RDP/Spice;
-ws-icon-9 = 10:Music;
-ws-icon-default = 
+; NOTE: The label needs to match the name of the i3 workspace
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+
+; Available tags:
+;   <label-state> (default) - gets replaced with <label-(focused|unfocused|visible|urgent)>
+;   <label-mode> (default)
+format = <label-state> <label-mode>
+
+; Available tokens:
+;   %mode%
+; Default: %mode%
+label-mode = %mode%
+label-mode-padding = 2
+label-mode-foreground= ${colors.alert}
+label-mode-background = ${colors.peach}
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-focused = %index%
+label-focused-foreground = ${colors.xcolor7}
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.xcolor9}
+label-focused-padding = 2
+label-focused-font = 3
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-font = 3
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-foreground = ${colors.xcolor6}
+label-visible-padding = 2
+label-visible-font = 3
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+;   %output%
+; Default: %icon%  %name%
+label-urgent = %index%
+label-urgent-foreground = ${colors.xcolor7}
+label-urgent-background = ${colors.background}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 2
+label-separator-foreground = ${colors.xcolor7}
+
+; ;   ● ○
+; ;label-focused = %name%
+; ;label-focused = %index%
+; label-focused = %icon%
+; ; label-focused = 
+; label-focused-foreground = ${colors.xcolor7}
+; label-focused-background = ${colors.xcolor1}
+; label-focused-padding = 2
+; label-focused-font = 3
+
+; label-unfocused = 
+; label-unfocused-padding = 2
+; label-unfocused-margin = 1
+; label-unfocused-foreground = ${colors.xcolor1}
+; label-unfocused-background = ${colors.background}
+
+; label-urgent = 
+; ; label-urgent-foreground = ${colors.alert}
+; label-urgent-background = ${colors.background}
+; label-urgent-padding = 2
+; label-urgent-margin = 1
 
 ;----------------------------------------------------------
 ;	          T E X T    M O D U L E S
@@ -519,10 +596,12 @@ interval = 1
 format-foreground = ${colors.xcolor7}
 format-background = ${colors.xcolor1}
 
-date = "  %Y/%m/%d"
-date-alt = ""
-time = ""
-time-alt = "  %I:%M:%S %p"
+date-alt = "  %Y/%m/%d"
+; date = "  %Y/%m/%d"
+; date-alt = ""
+; time = ""
+time = "  %I:%M:%S %p"
+; time-alt = "  %I:%M:%S %p"
 ;date = "%Y/%m/%d | "
 ;date-alt = "It is day %j, week %V, of year %y of the %Cth century."
 ;time = "%I:%M:%S %p"

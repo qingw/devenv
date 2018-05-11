@@ -267,8 +267,8 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 ###---Define actions for certain windows---###
 
 
-assign [class="Firefox|Chromium"] $ws2
-assign [class="^URxvt$" instance="urxvt"] $ws2
+assign [class="Firefox|Chromium|Chrome"] $ws2
+# assign [class="^URxvt$" instance="urxvt"] $ws2
 
 assign [class="Emacs"] $ws1
 
