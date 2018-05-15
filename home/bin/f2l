@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# move file to other location then relink here
+
+src=$1
+dst=$2
+
+if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
+then
+    echo  "File already exists!"
+    exit 0
+fi
+
+mv $src $dst
+ln -s $dst $src
+
+

@@ -427,7 +427,7 @@ bindsym $mod+r mode "resize"
 # }
 
 # hide/unhide i3status bar
-bindsym $mod+m bar mode toggle
+# bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
@@ -547,7 +547,9 @@ mode "$mode_system" {
 exec --no-startup-id xset dpms 300
 
 exec --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
-exec --no-startup-id xrandr --output DVI-I-1 --left-of HDMI-0
+
+exec --no-startup-id xrandr --output HDMI-2  --primary
+exec --no-startup-id xrandr --output DVI-I-1 --left-of HDMI-2
 
 
 # Press $mod+o followed by either f, t, m, n, v, etc. to launch firefox,  and the most used apps by me
