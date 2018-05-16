@@ -7,28 +7,35 @@ sudo -v
 sudo pacman -Syu --noconfirm
 
 # Install git and wget if necessary
-sudo pacman -S --needed git wget --noconfirm
+sudo pacman -S --needed git wget reflector --noconfirm
 
-# Install aura
-sudo pacman -S --needed base-devel gmp pcre --noconfirm
-
+# Install trizen
 cd /tmp/
-wget https://aur.archlinux.org/cgit/aur.git/snapshot/aura-bin.tar.gz
-tar -xzf aura-bin.tar.gz
-cd aura-bin
-makepkg -si --noconfirm
+git clone https://aur.archlinux.org/trizen-git.git
+cd trizen-git
+makepkg -si
 
-# Update aur packages
-sudo aura -Aau --noconfirm
+# # Install aura
+# sudo pacman -S --needed base-devel gmp pcre --noconfirm
+
+# cd /tmp/
+# wget https://aur.archlinux.org/cgit/aur.git/snapshot/aura-bin.tar.gz
+# tar -xzf aura-bin.tar.gz
+# cd aura-bin
+# makepkg -si --noconfirm
+
+# # Update aur packages
+# sudo aura -Aau --noconfirm
 
 # Install numix-curser-theme
-sudo aura -Aa numix-cursor-theme-git --noconfirm
+trizen -S numix-cursor-theme-git --noconfirm
 
 # Backup .Xresources
-sudo cp ~/.Xresources ~/.Xresources.bak
+cp ~/.Xresources ~/.Xresources.bak
 
 # Install required packages from main Repos
-sudo pacman -S --needed compton dunst feh i3 i3lock jsoncpp libmpdclient lxappearance rofi unzip xautolock --noconfirm
+
+sudo pacman -S --needed compton dunst feh i3-gaps i3lock jsoncpp libmpdclient lxappearance rofi unzip xautolock  volumeicon --noconfirm
 
 # Install polybar from AUR
 sudo aura -Aa polybar-git --noconfirm
@@ -52,21 +59,21 @@ cp fontawesome-webfont.ttf ~/.fonts
 fc-cache -f -v
 
 # Download config files from GitHub
-cd ~
-git clone https://github.com/BurningSmile/dotfiles.git
+# cd ~
+# git clone https://github.com/BurningSmile/dotfiles.git
 
 # Install configs
-cd ~/dotfiles/
-mkdir ~/.config/polybar/
-mv ./polybar/* ~/.config/polybar/
-mkdir ~/.config/i3
-mv ./i3/config ~/.config/i3/
-mv ./i3/scripts ~/.config/i3
-mv .Xresources ~
-mkdir ~/.config/dunst
-mv ./dunst/dunstrc ~/.config/dunst/dunstrc
-mkdir ~/.config/rofi
-mv ./rofi/* ~/.config/rofi/
+# cd ~/dotfiles/
+# mkdir ~/.config/polybar/
+# mv ./polybar/* ~/.config/polybar/
+# mkdir ~/.config/i3
+# mv ./i3/config ~/.config/i3/
+# mv ./i3/scripts ~/.config/i3
+# mv .Xresources ~
+# mkdir ~/.config/dunst
+# mv ./dunst/dunstrc ~/.config/dunst/dunstrc
+# mkdir ~/.config/rofi
+# mv ./rofi/* ~/.config/rofi/
 
 # Copy background image
 mkdir ~/Pictures/backgrounds
@@ -74,10 +81,8 @@ mv ~/dotfiles/i3/Background/firewatch_ARC.jpg ~/Pictures/backgrounds
 
 
 
-# Install favarit utility
-sudo pacman -S --needed the_silver_searcher ripgrep --noconfirm
-
 # Install Emacs
+sudo pacman -S --needed aspell aspell-en --noconfirm
 
 # Install vim
 sudo pacman -S --needed  gvim  --noconfirm
@@ -93,7 +98,7 @@ cd ~
 vim +PlugClean +PlugInstall +PlugUpdate +q! +q!
 
 # Install you-complete-me for vim auto completion.
-sudo pacman -S --needed cmake clang python python3 --noconfirm
+sudo pacman -S --needed cmake clang python python3 python-pip --noconfirm
 mkdir /tmp/ycm_build
 cd /tmp/ycm_build
 cmake -G "Unix Makefiles" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
@@ -104,43 +109,58 @@ cd ~
 # Install powerline
 sudo pacman -S --needed powerline powerline-fonts powerline-vim --noconfirm
 
+# Install favarit utility
+sudo pacman -S --needed xrandr --noconfirm
+sudo pacman -S --needed the_silver_searcher ripgrep --noconfirm
+
+sudo pacman -S --needed fcitx-rime --noconfirm
+
+trizen -S clipit --noconfirm
+trizen -S bat --noconfirm
+
+# network
+sudo pacman -S --needed networkmanager network-manager-applet --noconfirm
+sudo pacman -S --needed ipcalc mtr wireshark-gtk gnu-netcat --noconfirm
+sudo pacman -S ranger fd ncdu pv parallel fzf --noconfirm
+
+
+sudo pacman -S htop  httpie jq --noconfirm
+
+sudo pip install -U asciinema visidata pgcli glances howdoi
+
+trizen -S pspg --noconfirm
+
+# Install entr
+cd /tmp
+wget http://entrproject.org/code/entr-4.0.tar.gz
+tar -xzvf entr-4.0.tar.gz
+cd eradman-entr-d5110481f5b9
+./configure
+make test
+sudo make install
+
 # Install tmux
 sudo pacman -S --needed tmux xsel --noconfirm
-sudo aura -Aa tmux-bash-completition --noconfirm
-cd ~/dotfiles/tmux
-mv ~/.tmux.conf ~/.tmux.conf.bak # Backup Tmux.conf if present.
-mv .tmux.conf ~
-mv ~/dotfiles/tmux/.tmux-ssh.conf ~
+trizen -S tmux-bash-completition --noconfirm
+
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cd ~
 
 # Install theme
 sudo pacman -S --needed arc-gtk-theme --noconfirm
 
-# Install htop
-sudo pacman -S htop --noconfirm
-mv ~/.config/htop/htoprc ~/.config/htop/htoprc.bak # Backup htoprc if present
-cd ~/dotfiles/htop
-mkdir ~/.config/htop
-mv htoprc ~/.config/htop/
-cd ~
 
 # Setup Mpd and Mpc
-sudo pacman -S mpd mpc --noconfirm
-mkdir -p ~/.config/mpd/
+sudo pacman -S beets mpd mpc --noconfirm
+sudo pip install -U pylast pyacoustid
+
 mkdir -p ~/.mpd/playlists
 cd ~/.mpd/
-touch database log pid state sticker.sql
-mv ~/.config/mpd/mpd.conf ~/.config/mpd/mpd.conf.bak #Backup config if present
-mv ~/dotfiles/mpd/mpd.conf ~/.config/mpd/
-sudo systemctl disable mpd.service
+touch mpd.db mpd.log mpd.pid mpdstate
+# sudo systemctl disable mpd.service
 
 # Setup Ncmpcpp
 sudo pacman -S ncmpcpp --noconfirm
-mkdir ~/.ncmpcpp/
-mv ~/.ncmpcpp/config ~/.ncmpcpp/config.bak #Backup config if present
-mv ~/dotfiles/ncmpcpp/config ~/.ncmpcpp/
-cd ~
 
 # Setup Cava
 sudo aura -Aa cava --noconfirm
@@ -150,7 +170,7 @@ mv ~/dotfiles/cava/config ~/.config/cava
 
 # Setup urxvt
 sudo pacman -S rxvt-unicode --noconfirm
-sudo aura -Aa urxvt-vtwheel urxvt-fullscreen --noconfirm
+# sudo aura -Aa urxvt-vtwheel urxvt-fullscreen --noconfirm
 
 # Install zshell
 sudo pacman -S zsh --noconfirm
@@ -165,12 +185,8 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 EOF
 
-chmod +x /tmp/przto-install.sh
-/tmp/przto-install.sh
-mv ~/dotfiles/zsh/.zshrc ~/.zshrc
-mv ~/dotfiles/zsh/zpreztorc ~/.zprezto/runcoms/zpreztorc
+chmod +x /tmp/prezto-install.sh
+/tmp/prezto-install.sh
 chsh -s /bin/zsh
 
 # Cleanup
-cd ~
-rm -rf dotfiles/

@@ -19,7 +19,8 @@ set $right  l
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 10
+# font pango:monospace 10
+font xft:URWGothic-Book 11
 
 
 # Thin borders
@@ -113,9 +114,13 @@ floating_modifier $mod
 # control focused window when follows the mouse movements
 focus_follows_mouse no
 
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+new_window pixel 1
+new_float normal
+
 # window border settings
-default_border          none
-default_floating_border none
+# default_border          none
+# default_floating_border none
 
 # hiding borders adjacent to the screen edges
 hide_edge_borders none
@@ -124,8 +129,8 @@ hide_edge_borders none
 popup_during_fullscreen smart
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
 # bindsym $mod+Return exec terminal
+bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -180,11 +185,17 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
 # split in horizontal orientation
-bindsym $mod+Shift+v split h
+bindsym $mod+Shift+v split h;exec notify-send 'tile horizontally'
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+v split v;exec notify-send 'tile vertically'
+# bindsym $mod+q split toggle
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -197,7 +208,7 @@ bindsym $mod+plus scratchpad show
 # bindsym $mod+b border none
 # bindsym $mod+n border normal
 # bindsym $mod+m border 1pixel
-bindsym $mod+b border toggle
+bindsym $mod+a border toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -524,7 +535,9 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 # bindsym Mod4+k exec keepass
 
 # Set shut down, restart and locking features
-bindsym $mod+Shift+p mode "$mode_system"
+bindsym $mod+Shift+p exec --no-startup-id exitx
+# bindsym $mod+Shift+p mode "$mode_system"
+
 set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 mode "$mode_system" {
     # bindsym l exec --no-startup-id i3exit lock, mode "default"
@@ -602,7 +615,9 @@ mode "$mode_launcher_screenshot" {
 # Autostart applications
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+# exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id ~/bin/wallpaper.sh ~/Wallpapers 1800
+
 #exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
@@ -610,17 +625,19 @@ exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+exec --no-startup-id ~/.Conky/startconky.sh
+
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 exec --no-startup-id xautolock -time 10 -locker blurlock
+# exec --no-startup-id xautolock -time 10 -locker "betterlockscreen -l"
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
 # exec --no-startup-id caffeine
 # exec --no-startup-id pa-applet
-# exec --no-startup-id compton --config ~/.config/i3/compton.conf -b
-#exec --no-startup-id xautolock -time 10 -locker "betterlockscreen -l"
-# exec --no-startup-id dunst
+exec --no-startup-id compton --config ~/.config/compton.conf -b
+exec --no-startup-id dunst
 # exec --no-startup-id mpd
 
 # exec --no-startup-id lxqt-policykit-agent
