@@ -1,0 +1,52 @@
+#!/bin/bash
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+
+if [ -z "$1" ] || [ -z "$2" ] || [ "$1" == "--help" ]; then
+echo "rcw 0.1"
+echo "random changes your wallpaper every x seconds"
+echo ""
+echo "Use: rcw /path/of/wallpapers/directory seconds"
+echo "Example: rcw /home/charlie/wallpapers 120"
+exit
+fi
+
+if ! [ -e "$1" ]; then
+echo "Director $1 no existe"
+exit
+fi
+
+cd $1
+
+function comprobar() {
+num=1
+for x in *;
+do
+       let num=$num+1
+
+done
+}
+
+MONS=$(xrandr --listactivemonitors|head -n 1|sed -e 's/[^0-9]//g')
+
+while [ 1 ]; do
+        comprobar
+        var_bg=""
+        for i in $(seq 1 $MONS);
+        do
+            var_ran=$(($RANDOM%$num))
+            var_aum=1
+
+	        for y in *; do
+		        if [ "$var_ran" -eq "$var_aum" ]; then
+                   var_bg=${var_bg}' --bg-scale "'$y'"'
+                   break
+		        fi
+
+		        let var_aum=$var_aum+1
+	        done
+        done
+			eval "feh $var_bg"
+			sleep $2
+done
+IFS=$SAVEIFS

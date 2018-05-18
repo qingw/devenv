@@ -121,7 +121,7 @@ trizen -S bat --noconfirm
 # network
 sudo pacman -S --needed networkmanager network-manager-applet --noconfirm
 sudo pacman -S --needed ipcalc mtr wireshark-gtk gnu-netcat --noconfirm
-sudo pacman -S ranger fd ncdu pv parallel fzf --noconfirm
+sudo pacman -S ranger fd ncdu pv parallel fzf tldr --noconfirm
 
 
 sudo pacman -S htop  httpie jq --noconfirm
