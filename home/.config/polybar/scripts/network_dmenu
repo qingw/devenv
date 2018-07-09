@@ -1,0 +1,54 @@
+#!/bin/bash
+
+WIRED=("$(nmcli c | grep ethernet | cut -c1-$(nmcli c | grep -aob "UUID" | grep -oE '[0-9]+') | sed 's/^[ \t]*//;s/[ \t]*$//')")
+
+CURRENT=("$(nmcli d status | grep -w 'connected' | cut -c$(nmcli d status | grep -aob "CONNECTION" | grep -oE '[0-9]+')- | sed 's/^[ \t]*//;s/[ \t]*$//')")
+
+ARR=()
+ARR+=("Connected:")
+ARR+=("	$CURRENT")
+ARR+=("Wired Connection:")
+ARR+=("	$WIRED")
+ARR+=("WiFi:")
+ARR+=("$(nmcli d wifi | awk '!/*/' | awk '!/IN-USE/' | cut -c1-$(nmcli dev wifi | grep -aob "MODE"| grep -oE '[0-9]+') | sed 's/[ \t]*$//')")
+ARR+=("Others:")
+ARR+=("	Rescan WiFi")
+ARR+=("	Edit Connection")
+ARR+=("ON/OFF")
+ARR+=("	On Network Manager")
+ARR+=("	Off Network Manager")
+
+CHOICE=$(printf '%s\n' "${ARR[@]}" | rofi -dmenu -config /home/chew/.config/i3/rofi/wifi -p "Network Manager" | sed 's/^[ \t]*//;s/[ \t]*$//')
+if [ "$CHOICE" == "" ]; then
+	exit 0
+fi
+
+if [ "$CHOICE" == "Rescan Wifi" ]; then
+	nmcli d wifi rescan
+	exit 0
+fi
+
+if [ "$CHOICE" == "Edit Connection" ]; then
+	nm-connection-editor
+	exit 0
+fi
+
+if [ "$CHOICE" == "Off Network Manager" ]; then
+	nmcli n off
+	exit 0
+fi
+
+if [ "$CHOICE" == "On Network Manager" ]; then
+	nmcli n on
+	exit 0
+fi
+
+if [ "$CHOICE" == "$CURRENT" ]; then
+	nmcli c down "$CURRENT"
+	nmcli c up "$CHOICE"
+	exit 0
+else
+	nmcli c down "$CURRENT"
+	nmcli c up "$CHOICE"
+	exit 0
+fi

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+SSID_NAME=$(iwgetid -r | cut -c1-9)
+
+if [[ "${SSID_NAME}" = "" ]]; then
+	SSID_NAME=" LAN Cable"
+else
+	SSID_NAME=" ${SSID_NAME}"
+fi
+
+if [[ "$(nmcli g status | grep conn | awk '{print $1}')" = "disconnected" ]]; then
+	SSID_NAME=" Disconnected"
+fi
+
+if [[ "$(nmcli g status | grep conn | awk '{print $1}')" = "connecting" ]]; then
+	SSID_NAME=" Connecting"
+fi
+
+if [[ "$(nmcli g status | grep asleep | awk '{print $1}')" = "asleep" ]]; then
+	SSID_NAME=" Network Off"
+fi
+echo "${SSID_NAME}"

@@ -8,12 +8,12 @@
 
 # Launch bar1 and bar2
 #polybar base &
-MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
+export MONITOR=$(polybar -m|tail -1|sed -e 's/:.*$//g')
 
 if ! pgrep -x polybar; then
 	polybar base &
 else
-	pkill -USR1 polybar
+	pkill polybar
 fi
 
 echo "Bars launched..."

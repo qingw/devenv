@@ -1,7 +1,7 @@
 #!/bin/bash
+# install after base / grub /sudo/zsh/openssh/base-devel , use none-root useradd
 
-# Get sudo permissions for script run
-sudo -v
+# Get sudo permissions for script run sudo -v
 
 # Update system packages
 sudo pacman -Syu --noconfirm
@@ -14,49 +14,33 @@ cd /tmp/
 git clone https://aur.archlinux.org/trizen-git.git
 cd trizen-git
 makepkg -si
+cd ~
 
-# # Install aura
-# sudo pacman -S --needed base-devel gmp pcre --noconfirm
 
-# cd /tmp/
-# wget https://aur.archlinux.org/cgit/aur.git/snapshot/aura-bin.tar.gz
-# tar -xzf aura-bin.tar.gz
-# cd aura-bin
-# makepkg -si --noconfirm
-
-# # Update aur packages
-# sudo aura -Aau --noconfirm
-
-# Install numix-curser-theme
-trizen -S numix-cursor-theme-git --noconfirm
-
-# Backup .Xresources
-cp ~/.Xresources ~/.Xresources.bak
+# Install theme
+# sudo pacman -S --needed arc-gtk-theme --noconfirm
+trizen -S numix-themes-archblue-git numix-cursor-theme-git --noconfirm
 
 # Install required packages from main Repos
 
-sudo pacman -S --needed compton dunst feh i3-gaps i3lock jsoncpp libmpdclient lxappearance rofi unzip xautolock  volumeicon --noconfirm
+sudo pacman -S --needed xorg-xrandr xorg-xdpyinfo --noconfirm
+sudo pacman -S --needed imagemagick --noconfirm
+sudo pacman -S --needed compton dunst feh i3-gaps conky jsoncpp libmpdclient lxappearance rofi unzip xautolock  volumeicon --noconfirm
+trizen -S betterlockscreen polybar-git aur/i3lock-color --noconfirm
 
-# Install polybar from AUR
-sudo aura -Aa polybar-git --noconfirm
+sudo pacman -S lightdm-gtk3-greeter --noconfirm
+sudo systemctl enable lightdm
+sudo systemctl start lightdm
 
 # Install fonts for system
-mkdir ~/.fonts
-cd /tmp/
-wget https://github.com/chrissimpkins/Hack/releases/download/v2.020/Hack-v2_020-ttf.zip
-mkdir HackFont
-unzip Hack-v2_020-ttf.zip -d HackFont
-cd HackFont
-cp Hack-Regular.ttf ~/.fonts
-
-cd /tmp/
-wget https://github.com/FortAwesome/Font-Awesome/archive/v4.7.0.tar.gz
-tar -xzf v4.7.0.tar.gz
-cd 'Font-Awesome-4.7.0/fonts'
-cp fontawesome-webfont.ttf ~/.fonts
+sudo pacman -S ttf-droid ttf-font-awesome wqy-microhei adobe-source-han-sans-cn-fonts ttf-dejavu ttf-bitstream-vera --noconfirm
+trizen -S ttf-fira-code ttf-font-awesome-4 ttf-ms-fonts --noconfirm
+trizen -S ttf-dejavu-sans-mono-powerline-git --noconfirm
 
 # Reload font cache
 fc-cache -f -v
+
+
 
 # Download config files from GitHub
 # cd ~
@@ -76,50 +60,58 @@ fc-cache -f -v
 # mv ./rofi/* ~/.config/rofi/
 
 # Copy background image
-mkdir ~/Pictures/backgrounds
-mv ~/dotfiles/i3/Background/firewatch_ARC.jpg ~/Pictures/backgrounds
+# mkdir ~/Pictures/backgrounds
+# mv ~/dotfiles/i3/Background/firewatch_ARC.jpg ~/Pictures/backgrounds
 
+# base env
+trizen -S ldm ntfs-3g --noconfirm
+sudo pacman -S ghostscript cups --noconfirm
+# manager printer user must be in groups sys and cups
+sudo systemctl enable org.cups.cupsd
+sudo systemctl start org.cups.cupsd
 
 
 # Install Emacs
 sudo pacman -S --needed aspell aspell-en --noconfirm
+trizen -S emacs-git --noconfirm
 
 # Install vim
 sudo pacman -S --needed  gvim  --noconfirm
-sudo aura -Aa vim-plug-git --noconfirm
-cd ~/dotfiles/vim
-mkdir ~/.vim/
-mv ~/.vimrc ~/.vimrc.bak # Backup vimrc if present
-mv .vimrc ~
-cp -r ./.vim/ultisnips ~/.vim/
-cd ~
+# sudo aura -Aa vim-plug-git --noconfirm
+# cd ~/dotfiles/vim
+# mkdir ~/.vim/
+# mv ~/.vimrc ~/.vimrc.bak # Backup vimrc if present
+# mv .vimrc ~
+# cp -r ./.vim/ultisnips ~/.vim/
+# cd ~
 
 # Install vim plugins
-vim +PlugClean +PlugInstall +PlugUpdate +q! +q!
+# vim +PlugClean +PlugInstall +PlugUpdate +q! +q!
 
 # Install you-complete-me for vim auto completion.
-sudo pacman -S --needed cmake clang python python3 python-pip --noconfirm
-mkdir /tmp/ycm_build
-cd /tmp/ycm_build
-cmake -G "Unix Makefiles" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
-cmake -G "Unix Makefiles" -DUSE_SYSTEM_LIBCLANG=ON . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
-cmake --build . --target ycm_core --config Release
-cd ~
+# sudo pacman -S --needed cmake clang python python3 python-pip --noconfirm
+# mkdir /tmp/ycm_build
+# cd /tmp/ycm_build
+# cmake -G "Unix Makefiles" . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
+# cmake -G "Unix Makefiles" -DUSE_SYSTEM_LIBCLANG=ON . ~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp
+# cmake --build . --target ycm_core --config Release
+# cd ~
 
 # Install powerline
 sudo pacman -S --needed powerline powerline-fonts powerline-vim --noconfirm
 
-# Install favarit utility
-sudo pacman -S --needed xrandr --noconfirm
+# Install favorite utility
 sudo pacman -S --needed the_silver_searcher ripgrep --noconfirm
 
 sudo pacman -S --needed fcitx-rime --noconfirm
 
-trizen -S clipit --noconfirm
+trizen -S clipit unarchiver xarchiver --noconfirm
 trizen -S bat --noconfirm
 
 # network
 sudo pacman -S --needed networkmanager network-manager-applet --noconfirm
+sudo systemctl enable NetworkManager.service
+sudo systemctl start NetworkManager.service
 sudo pacman -S --needed ipcalc mtr wireshark-gtk gnu-netcat --noconfirm
 sudo pacman -S ranger fd ncdu pv parallel fzf tldr --noconfirm
 
@@ -146,9 +138,6 @@ trizen -S tmux-bash-completition --noconfirm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cd ~
 
-# Install theme
-sudo pacman -S --needed arc-gtk-theme --noconfirm
-
 
 # Setup Mpd and Mpc
 sudo pacman -S beets mpd mpc --noconfirm
@@ -163,10 +152,10 @@ touch mpd.db mpd.log mpd.pid mpdstate
 sudo pacman -S ncmpcpp --noconfirm
 
 # Setup Cava
-sudo aura -Aa cava --noconfirm
-mkdir ~/.config/cava
-mv ~/.config/cava/config ~/.config/cava/config.bak #Backup config if present
-mv ~/dotfiles/cava/config ~/.config/cava
+# sudo aura -Aa cava --noconfirm
+# mkdir ~/.config/cava
+# mv ~/.config/cava/config ~/.config/cava/config.bak #Backup config if present
+# mv ~/dotfiles/cava/config ~/.config/cava
 
 # Setup urxvt
 sudo pacman -S rxvt-unicode --noconfirm
@@ -189,4 +178,45 @@ chmod +x /tmp/prezto-install.sh
 /tmp/prezto-install.sh
 chsh -s /bin/zsh
 
+# Application used
+sudo pacman -S gstreamer ffmpeg smplayer --noconfirm
+
+
+# system tools
+trizen -S --noconfirm xorg-xev xorg-xprop lsof
+# Tools
+trizen -S zsh git subversion tmux mlocate
+# Editor
+# trizen -S vim sublime-text-imfix atom phpstorm
+# network
+trizen -S uget chromium google-chrome firefox vivaldi you-get --noconfirm
+# dev
+trizen -S nodejs npm php mariadb-client redis
+trizen -S postman-bin dbeaver docker docker-compose
+trizen -S virtualbox virtualbox-host-modules-arch virtualbox-ext-oracle virtualbox-guest-iso
+# socia
+trizen -S thunderbird deepin-wine-tim electronic-wechat
+# music
+trizen -S netease-cloud-music
+# media process
+trizen -S --noconfirm audacity
+# wps、pdf
+trizen -S wps-office ttf-wps-fonts foxitreader evince --noconfirm
+# Photo
+trizen -S gimp
+# Game
+trizen -S steam steam-native-runtime
+#trizen -S steamcmd
+# GFW
+trizen -S shadowsocks kcptun tsocks proxychains-ng
+# Remote
+trizen -S teamviewer-beta
+# 内网穿透
+trizen -S frp
+# Fonts
+trizen -S ttf-iosevka adobe-source-code-pro-fonts
+# Others
+trizen -S sshpass keepassxc seadrive-gui
+trizen -S --noconfirm calibre
+# trizen -S man-pages-zh_cn
 # Cleanup

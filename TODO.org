@@ -1,0 +1,8 @@
+* Tasks
+** FIXME input chinese clutt
+:PROPERTIES:
+:Created: [2018-07-09 Mon 10:46]
+:Linked:
+:END:
+
+sometimes input clutt, even cannot input in some app like calibre,telegram,workbench...

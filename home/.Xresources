@@ -62,8 +62,16 @@ XTerm*faceName:                   Terminus:size=11:antialias=true
 XTerm*selectToClipboard:          true
 
 ! URxvt.font:                       9x15,xft:Fira Mono:pixelsize=11
-URxvt.font:     xft:bitstream vera sans mono:size=16:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=16:antialias=true
+URxvt.font:     xft:DejaVu Sans Mono for Powerline:size=16:antialias=true
+URxvt.boldFont: xft:DejaVu Sans Mono for Powerline:bold:size=16:antialias=true
+! URxvt.font:     xft:bitstream vera sans mono:size=16:antialias=true
+! URxvt.boldFont: xft:bitstream vera sans mono:bold:size=16:antialias=true
+! URxvt.font:xft:Source Code Pro:antialias=True:pixelsize=16,xft:WenQuanYi Micro Hei:pixelsize=16,xft:FontAwesome:pixelsize=16
+! URxvt.boldfont:xft:Source Code Pro:antialias=True:pixelsize=16,xft:WenQuanYi Micro Hei:pixelsize=16,xft:FontAwesome:pixelsize=16
+
+! URxvt.font:xft:Source Code Pro:antialias=True:pixelsize=18,xft:WenQuanYi Micro Hei:pixelsize=18,xft:FontAwesome:pixelsize=18
+! URxvt.boldfont:xft:Source Code Pro:antialias=True:pixelsize=18,xft:WenQuanYi Micro Hei:pixelsize=18,xft:FontAwesome:pixelsize=12
+
 ! alternative font settings with 'terminus':
 !URxvt.font:      -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1
 !URxvt.bold.font: -xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1
