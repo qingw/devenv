@@ -65,6 +65,7 @@ fc-cache -f -v
 
 # base env
 trizen -S ldm ntfs-3g --noconfirm
+
 sudo pacman -S ghostscript cups --noconfirm
 # manager printer user must be in groups sys and cups
 sudo systemctl enable org.cups.cupsd
@@ -103,7 +104,7 @@ sudo pacman -S --needed powerline powerline-fonts powerline-vim --noconfirm
 # Install favorite utility
 sudo pacman -S --needed the_silver_searcher ripgrep --noconfirm
 
-sudo pacman -S --needed fcitx-rime --noconfirm
+sudo pacman -S --needed fcitx-rime fcitx-im --noconfirm
 
 trizen -S clipit unarchiver xarchiver --noconfirm
 trizen -S bat --noconfirm
@@ -135,9 +136,9 @@ sudo make install
 sudo pacman -S --needed tmux xsel --noconfirm
 trizen -S tmux-bash-completition --noconfirm
 
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cd ~
-
+git clone https://github.com/gpakosz/.tmux.git
+ln -s -f .tmux/.tmux.conf
 
 # Setup Mpd and Mpc
 sudo pacman -S beets mpd mpc --noconfirm
@@ -169,18 +170,22 @@ cat << 'EOF' >> /tmp/prezto-install.sh
 #!/usr/bin/zsh
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^(README.md|zshrc|zpreztorc)(.N); do
   ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 EOF
 
 chmod +x /tmp/prezto-install.sh
 /tmp/prezto-install.sh
+
+curl https://gist.githubusercontent.com/wikimatze/4c2fbaf8ebe1e8ce0c1f/raw/ed34a873ab0be5dc687b8047eb1912afabaa2014/prompt_wikimatze_setup \
+    -o "${ZDOTDIR:-$HOME}/.zprezto/modules/prompt/functions/prompt_wikimatze_setup"
 chsh -s /bin/zsh
 
-# Application used
-sudo pacman -S gstreamer ffmpeg smplayer --noconfirm
 
+# Application used
+sudo pacman -S gstreamer ffmpeg smplayer  --noconfirm
+sudo pacman -S --noconfirm soundfont-fluid timidity++
 
 # system tools
 trizen -S --noconfirm xorg-xev xorg-xprop lsof

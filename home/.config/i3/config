@@ -652,6 +652,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
+exec --no-startup-id udiskie -T
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 exec_always --no-startup-id ~/.config/conky/launch.sh &
@@ -676,7 +677,7 @@ exec --no-startup-id seadrive -c ~/seadrive.conf -f -d ~/.seadrive/data -l ~/.se
 
 # exec --no-startup-id urxvt -name scratchpad -e /usr/bin/nano
 
-# exec --no-startup-id pcmanfm -d
+exec --no-startup-id pcmanfm -d
 # exec --no-startup-id i3-sensible-terminal
 # exec --no-startup-id emacs
 # exec --no-startup-id pcmanfm
