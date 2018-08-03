@@ -194,7 +194,7 @@ trizen -S zsh git subversion tmux mlocate
 # Editor
 # trizen -S vim sublime-text-imfix atom phpstorm
 # network
-trizen -S uget chromium google-chrome firefox vivaldi you-get --noconfirm
+trizen -S uget chromium google-chrome firefox vivaldi you-get aria2 --noconfirm
 # dev
 trizen -S nodejs npm php mariadb-client redis
 trizen -S postman-bin dbeaver docker docker-compose

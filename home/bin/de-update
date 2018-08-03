@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+echo "update tmux config."
+cd ~
+cd .tmux
+git pull
+
+echo "update zsh config."
+cd ~/.zprezto
+git pull
+git submodule update --init --recursive
+
+echo "update doom emacs config."
+cd ~/.doom.d
+git pull
+
+cd ~/.emacs.d
+bin/doom up
+bin/doom re
+

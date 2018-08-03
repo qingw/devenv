@@ -4,8 +4,8 @@
 # Disable nomatch globbing expression
 # setopt +o nomatch
 
-# # Add `~/bin` to the `$PATH`
-# export PATH="$HOME/bin:$PATH";
+# Add `~/bin` to the `$PATH`
+export PATH="$HOME/bin:$PATH";
 
 # # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -129,7 +129,20 @@ updatedebiansystem() {
 #         ls --color=auto;
 #     fi
 # }
+ZSH_SPECTRUM_TEXT=${ZSH_SPECTRUM_TEXT:-Arma virumque cano Troiae qui primus ab oris}
+# Show all 256 colors with color number
+function spectrum_ls() {
+  for code in {000..255}; do
+    print -P -- "$code: %{$FG[$code]%}$ZSH_SPECTRUM_TEXT%{$reset_color%}"
+  done
+}
 
+# Show all 256 colors where the background is set to specific color
+function spectrum_bls() {
+  for code in {000..255}; do
+    print -P -- "$code: %{$BG[$code]%}$ZSH_SPECTRUM_TEXT%{$reset_color%}"
+  done
+}
 # # Alias vi to vim.
 # alias vi='vim'
 
