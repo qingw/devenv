@@ -1,8 +1,28 @@
 * Tasks
-** FIXME input chinese clutt
+** [X] FIXME input chinese clutt :NOTE:
+CLOSED: [2018-08-06 Mon 11:01]
 :PROPERTIES:
 :Created: [2018-07-09 Mon 10:46]
 :Linked:
 :END:
 
 sometimes input clutt, even cannot input in some app like calibre,telegram,workbench...
+
+install fcitx-im for all framework.
+
+** [X] FIXME auto mount usb disk normal privilige
+CLOSED: [2018-08-06 Mon 11:02]
+:PROPERTIES:
+:Created: [2018-07-10 Tue 16:05]
+:Linked: [[file:~/workspace/devenv/home/.config/i3/config::bindsym%20$mod+p%20focus%20parent]]
+:END:
+
+install udisk2,control by udisksie
+
+** TODO how to switch from float window to tile window smoothly with $mod+hklj :PROJECT:
+:PROPERTIES:
+:Created: [2018-07-16 Mon 17:01]
+:Linked: [[file:~/workspace/devenv/home/.config/i3/config::exec%20--no-startup-id%20udiskie%20-T]]
+:END:
+
+

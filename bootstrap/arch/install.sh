@@ -183,6 +183,9 @@ curl https://gist.githubusercontent.com/wikimatze/4c2fbaf8ebe1e8ce0c1f/raw/ed34a
 chsh -s /bin/zsh
 
 
+sudo pacman -S --noconfirm systemd-numlockontty
+sudo systemctl enable numLockOnTty
+
 # Application used
 sudo pacman -S gstreamer ffmpeg smplayer  --noconfirm
 sudo pacman -S --noconfirm soundfont-fluid timidity++
@@ -194,7 +197,7 @@ trizen -S zsh git subversion tmux mlocate
 # Editor
 # trizen -S vim sublime-text-imfix atom phpstorm
 # network
-trizen -S uget chromium google-chrome firefox vivaldi you-get aria2 --noconfirm
+trizen -S uget chromium google-chrome firefox vivaldi you-get aria2 transimission-cli --noconfirm
 # dev
 trizen -S nodejs npm php mariadb-client redis
 trizen -S postman-bin dbeaver docker docker-compose
