@@ -18,8 +18,9 @@ export XDG_CONFIG_HOME := $(XDG_CONFIG_HOME)
 export ROOT_DIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 
 
-TARGETS ?= bin nvim bash zsh
-LIGHT_JOB ?= bin nvim bash zsh
+TARGETS ?= bin nvim bash zsh tmux
+LIGHT_JOB ?= bin nvim bash zsh tmux
+CONFIG_TARGETS := $(TARGETS:%=config_%)
 INSTALL_TARGETS := $(TARGETS:%=install_%)
 CLEAN_TARGETS := $(TARGETS:%=clean_%)
 
@@ -37,6 +38,10 @@ $(INSTALL_TARGETS):
 	@$(info start install $@ ...)
 	@$(MAKE) -C Apps/$(subst install_,,$@) install
 
+
+$(CONFIG_TARGETS):
+	@$(info start config $@ ...)
+	@$(MAKE) -C Apps/$(subst config_,,$@) config
 
 $(CLEAN_TARGETS):
 	@$(info start clean $@ ...)
