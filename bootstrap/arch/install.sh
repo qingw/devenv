@@ -16,6 +16,14 @@ cd trizen-git
 makepkg -si
 cd ~
 
+# Install aurman
+cd /tmp/
+wget https://github.com/polygamma.gpg
+gpg --import polygamma.gpg
+git clone https://aur.archlinux.org/aurman.git
+cd aurman
+makepkg -si
+cd ~
 
 # Install theme
 # sudo pacman -S --needed arc-gtk-theme --noconfirm
